@@ -1,19 +1,20 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
-import { NavController } from 'ionic-angular';
+import { IonicPage, NavController, MenuController } from 'ionic-angular';
 
 declare var google;
 
 @IonicPage()
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-map',
+  templateUrl: 'map.html'
 })
-export class HomePage {
+export class MapPage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController, private menuCtrl: MenuController) {
+    menuCtrl.enable(true);
+  }
 
   ionViewDidLoad() {
     this.loadMap();
@@ -25,7 +26,8 @@ export class HomePage {
     let mapOptions = {
       center: latLng,
       zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      draggable: false
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
