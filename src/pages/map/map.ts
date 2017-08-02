@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, MenuController, NavParams, Select } from 'ionic-angular';
 
 import { WorkspaceProvider } from '../../providers/petakami/workspace';
+import { LayerProvider } from '../../providers/petakami/layer';
 
 declare var google;
 
@@ -22,7 +23,9 @@ export class MapPage {
   drawType: string;
   drawTypes: any;
 
-  constructor(public navCtrl: NavController, private menuCtrl: MenuController, public navParams: NavParams, private workspaceProvider: WorkspaceProvider) {
+  constructor(public navCtrl: NavController, private menuCtrl: MenuController, public navParams: NavParams,
+    private workspaceProvider: WorkspaceProvider, private layerProvider: LayerProvider
+  ) {
     menuCtrl.enable(true);
   }
 
@@ -112,7 +115,7 @@ export class MapPage {
         let coordinates = me.extractPathCoordinate(e.overlay.getPath().getArray());
 
         me.mapInfo.coordinates.linestring.push(coordinates);
-      } else if(e.type === 'polygon'){
+      } else if (e.type === 'polygon') {
         let coordinates = me.extractPathCoordinate(e.overlay.getPath().getArray());
 
         me.mapInfo.coordinates.polygon.push([coordinates]);
@@ -131,6 +134,23 @@ export class MapPage {
   }
 
   save() {
-    console.log(JSON.stringify(this.mapInfo));
+    this.mapInfo.name += 'MobileTest';
+    this.layerProvider.addUserLayer({
+      name: this.mapInfo.name, description: this.mapInfo.description, workspace: this.mapInfo.workspace
+    }).subscribe(
+      result => {
+        console.log(result);
+        console.log("berhasil add ulayer");
+      },
+      err => console.error(err)
+      );
+    this.layerProvider.addLayer(this.mapInfo)
+      .subscribe(
+      result => {
+        console.log(result);
+        console.log("berhasil");
+      },
+      err => console.error(err)
+      )
   }
 }

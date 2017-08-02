@@ -9,6 +9,7 @@ import { MyApp } from './app.component';
 import { ApiConfig } from '../providers/configs/api';
 import { AbstractPetaKami } from '../providers/petakami/abstract.pk';
 import { WorkspaceProvider } from '../providers/petakami/workspace';
+import { LayerProvider } from '../providers/petakami/layer';
 
 @NgModule({
   declarations: [
@@ -30,8 +31,9 @@ import { WorkspaceProvider } from '../providers/petakami/workspace';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ApiConfig,
-    AbstractPetaKami,
-    WorkspaceProvider
+
+    // PetaKami Provider
+    AbstractPetaKami, WorkspaceProvider, LayerProvider
   ]
 })
 export class AppModule { }
