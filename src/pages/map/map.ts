@@ -51,23 +51,19 @@ export class MapPage {
     return (this.mapInfo.name !== null);
   }
 
-  setDrawType() {
-    this.drawTypeSection.open();
-  }
-
   loadDrawTypes() {
     this.workspaceProvider
       .getDrawTypes(this.mapInfo.workspace)
       .subscribe(
-        result => {
-          this.drawTypes = result.map((res) => {
-            return res.toLowerCase();
-          });
-          this.drawType = this.drawTypes[0];
-          this.setCoordinates();
-          this.enableDrawShapes();
-        },
-        err => console.error(err)
+      result => {
+        this.drawTypes = result.map((res) => {
+          return res.toLowerCase();
+        });
+        this.drawType = this.drawTypes[0];
+        this.setCoordinates();
+        this.enableDrawShapes();
+      },
+      err => console.error(err)
       );
   }
 
@@ -80,26 +76,61 @@ export class MapPage {
   }
 
   enableDrawShapes() {
-    let coordinate: any;
-    
-    if (this.drawType === 'point') {
-      return google.maps.event.addListener(this.gMap, 'click', (e) => {
-        let marker = new google.maps.Marker({
-          position: e.latLng,
-          map: this.gMap
-        });
+    let me = this;
+    let gDrawTypes = this.drawTypes.map((dType) => {
+      if (dType === 'point') return 'marker';
+      else if (dType === 'linestring') return 'polyline';
+      else return 'polygon';
+    });
 
-      });
-    }
-    else if (this.drawType === 'line') {
+    let drawingManager = new google.maps.drawing.DrawingManager({
+      drawingMode: google.maps.drawing.OverlayType.MARKER,
+      drawingControl: true,
+      drawingControlOptions: {
+        position: google.maps.ControlPosition.TOP_CENTER,
+        drawingModes: gDrawTypes
+      },
+      markerOptions: {
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: "black",
+          fillOpacity: 1,
+          strokeColor: 'grey',
+          strokeWeight: .1,
+          scale: 5
+        }
+      }
+    });
+    drawingManager.setMap(this.gMap);
 
-    }
-    else if (this.drawType === 'polygon') {
+    google.maps.event.addListener(drawingManager, 'overlaycomplete', function (e) {
+      if (e.type === 'marker') {
+        let coordinates = e.overlay.getPosition();
 
-    }
+        me.mapInfo.coordinates.point.push([coordinates.lat(), coordinates.lng()]);
+      } else if (e.type === 'polyline') {
+        let coordinates = me.extractPathCoordinate(e.overlay.getPath().getArray());
+
+        me.mapInfo.coordinates.linestring.push(coordinates);
+      } else if(e.type === 'polygon'){
+        let coordinates = me.extractPathCoordinate(e.overlay.getPath().getArray());
+
+        me.mapInfo.coordinates.polygon.push([coordinates]);
+      }
+    });
+  }
+
+  extractPathCoordinate(pathCoordinates) {
+    let resultCoordinate = [];
+
+    pathCoordinates.forEach((c) => {
+      resultCoordinate.push([c.lat(), c.lng()]);
+    });
+
+    return resultCoordinate;
   }
 
   save() {
-    console.log(this.mapInfo);
+    console.log(JSON.stringify(this.mapInfo));
   }
 }
