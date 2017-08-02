@@ -3,8 +3,11 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
+import { ApiConfig } from '../providers/configs/api';
+import { WorkspaceProvider } from '../providers/petakami/workspace';
 
 @NgModule({
   declarations: [
@@ -12,6 +15,7 @@ import { MyApp } from './app.component';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp, {
       preloadModules: true
     })
@@ -23,7 +27,9 @@ import { MyApp } from './app.component';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    ApiConfig,
+    WorkspaceProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }

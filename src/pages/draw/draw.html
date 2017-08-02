@@ -1,0 +1,33 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Draw Features</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Nama Layer</ion-label>
+      <ion-input required type="text" [(ngModel)]="map.name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Layer Description</ion-label>
+      <ion-textarea [(ngModel)]="map.description"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Workspace</ion-label>
+      <ion-select required [(ngModel)]="map.workspace">
+        <ion-option *ngFor="let workspace of workspaces" value="{{workspace}}">{{workspace}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <div>
+    <button ion-button (click)="draw()">Start Draw</button>
+  </div>
+</ion-content>
