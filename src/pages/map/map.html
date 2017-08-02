@@ -5,7 +5,25 @@
     </button>
     <ion-title *ngIf="!isDrawMode">Ionic Blank</ion-title>
     <ion-title *ngIf="isDrawMode">{{mapInfo.name}}</ion-title>
+
+    <ion-buttons end *ngIf="isDrawMode">
+      <button class="draw-type" [ngClass]="drawType" ion-button (click)="setDrawType()"></button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<div #map id="map" data-tap-disabled="true"></div>
+<ion-content>
+  <div #map id="map" data-tap-disabled="true">
+    <ion-select #drawTypeSection [(ngModel)]="drawType">
+      <ion-option value="point">Point</ion-option>
+      <ion-option value="line">Line</ion-option>
+      <ion-option value="polygon">Polygon</ion-option>
+    </ion-select>
+  </div>
+
+  <ion-fab left bottom *ngIf="isDrawMode">
+    <button ion-fab (click)="save()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+  </ion-fab>
+</ion-content>

@@ -3,4 +3,31 @@ page-map {
         width: 100%;
         height: 100%;
     }
+
+    .draw-type{
+        width: 30px; 
+        position: absolute; 
+        left: -30px;
+        top: -5px; 
+        z-index: -1;
+
+        &.line{
+            background:url(../../assets/icon/line_draw_type.png);
+            background-repeat: no-repeat;
+        }
+        
+        &.point{
+            background:url(../../assets/icon/point_draw_type.png);
+            background-repeat: no-repeat;
+        }
+
+        &.polygon{
+            background:url(../../assets/icon/polygon_draw_type.png);
+            background-repeat: no-repeat;
+        }
+    }
+
+.scroll-view.scroll-y {
+    overflow-x: hidden;  /* default value is 'scroll' */
+}
 }
