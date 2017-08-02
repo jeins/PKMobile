@@ -31,13 +31,13 @@ export class MapPage {
   ionViewDidLoad() {
     this.loadMap();
   }
-
+  
   loadMap() {
-    let latLng = new google.maps.LatLng(-34.9290, 138.6010);
+    let latLng = new google.maps.LatLng(-0.4055727193536711, 116.19846321160155);
 
     let mapOptions = {
       center: latLng,
-      zoom: 15,
+      zoom: 5,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
