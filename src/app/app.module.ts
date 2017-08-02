@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { ApiConfig } from '../providers/configs/api';
+import { AbstractPetaKami } from '../providers/petakami/abstract.pk';
 import { WorkspaceProvider } from '../providers/petakami/workspace';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { WorkspaceProvider } from '../providers/petakami/workspace';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ApiConfig,
+    AbstractPetaKami,
     WorkspaceProvider
   ]
 })

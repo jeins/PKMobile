@@ -15,13 +15,12 @@
 <ion-content>
   <div #map id="map" data-tap-disabled="true">
     <ion-select #drawTypeSection [(ngModel)]="drawType">
-      <ion-option value="point">Point</ion-option>
-      <ion-option value="line">Line</ion-option>
-      <ion-option value="polygon">Polygon</ion-option>
+      <ion-option *ngFor="let dt of drawTypes" value="{{dt}}">{{dt}}</ion-option>
     </ion-select>
   </div>
 
   <ion-fab left bottom *ngIf="isDrawMode">
+    <p>{{drawTypes}}</p>
     <button ion-fab (click)="save()">
         <ion-icon name="checkmark"></ion-icon>
       </button>

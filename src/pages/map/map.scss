@@ -11,7 +11,7 @@ page-map {
         top: -5px; 
         z-index: -1;
 
-        &.line{
+        &.linestring{
             background:url(../../assets/icon/line_draw_type.png);
             background-repeat: no-repeat;
         }
@@ -26,8 +26,4 @@ page-map {
             background-repeat: no-repeat;
         }
     }
-
-.scroll-view.scroll-y {
-    overflow-x: hidden;  /* default value is 'scroll' */
-}
 }
