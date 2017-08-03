@@ -134,7 +134,8 @@ export class MapPage {
   }
 
   save() {
-    this.mapInfo.name += 'MobileTest';
+    this.mapInfo.name += 'ionic';
+
     this.layerProvider.addUserLayer({
       name: this.mapInfo.name, description: this.mapInfo.description, workspace: this.mapInfo.workspace
     }).subscribe(
@@ -144,6 +145,14 @@ export class MapPage {
       },
       err => console.error(err)
       );
+
+    Object.keys(this.mapInfo.coordinates).map((dType)=>{
+      if(this.mapInfo.coordinates[dType].length === 0){
+        delete this.mapInfo.coordinates[dType];
+      }
+    });
+
+      
     this.layerProvider.addLayer(this.mapInfo)
       .subscribe(
       result => {
