@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, MenuController, NavParams, Select } from 'ionic-angular';
+import { IonicPage, NavController, MenuController, NavParams, Select, Platform  } from 'ionic-angular';
 
 import { WorkspaceProvider } from '../../providers/petakami/workspace';
 import { LayerProvider } from '../../providers/petakami/layer';
@@ -26,7 +26,7 @@ export class MapPage {
   constructor(public navCtrl: NavController, private menuCtrl: MenuController, public navParams: NavParams,
     private workspaceProvider: WorkspaceProvider, private layerProvider: LayerProvider
   ) {
-    menuCtrl.enable(true);
+    this.menuCtrl.enable(true);
   }
 
   ionViewDidLoad() {
@@ -146,13 +146,13 @@ export class MapPage {
       err => console.error(err)
       );
 
-    Object.keys(this.mapInfo.coordinates).map((dType)=>{
-      if(this.mapInfo.coordinates[dType].length === 0){
+    Object.keys(this.mapInfo.coordinates).map((dType) => {
+      if (this.mapInfo.coordinates[dType].length === 0) {
         delete this.mapInfo.coordinates[dType];
       }
     });
 
-      
+
     this.layerProvider.addLayer(this.mapInfo)
       .subscribe(
       result => {
